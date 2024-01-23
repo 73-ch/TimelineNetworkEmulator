@@ -28,7 +28,8 @@ export function isFinishEvent(event: TimelineEvent): event is FinishEvent {
 export class TimelineNetworkEmulator {
   private startTime: number = 0;
   private timeline: TimelineEvent[] = [];
-  private currentEventIdx: number = 0;
+  private nextEventIdx: number = 0;
+  private currentEventIdx: number = -1;
   private status: "initialized" | "started" | "stopped" = "initialized";
 
   constructor(timeline: TimelineEvent[]) {
@@ -71,7 +72,7 @@ export class TimelineNetworkEmulator {
     }
 
     this.startTime = Date.now();
-    this.currentEventIdx = 0;
+    this.nextEventIdx = 0;
     this.status = "started";
   }
 
@@ -101,24 +102,29 @@ export class TimelineNetworkEmulator {
     }
 
     const currentTime = Date.now() - this.startTime;
-    const currentEvent = this.timeline[this.currentEventIdx];
+    const nextEvent = this.timeline[this.nextEventIdx];
 
-    if (!currentEvent) return;
+    if (!nextEvent) return;
 
     // check if current event is finished
-    if (isFinishEvent(currentEvent) && currentEvent.finish) {
+    if (
+      isFinishEvent(nextEvent) &&
+      currentTime > nextEvent.timestamp &&
+      nextEvent.finish
+    ) {
       console.log("event finished");
       this.stop();
       return;
     }
 
     // occur event
-    if (isDnctlEvent(currentEvent) && currentTime > currentEvent.timestamp) {
-      let command = TimelineNetworkEmulator.eventToCommand(currentEvent);
+    if (isDnctlEvent(nextEvent) && currentTime > nextEvent.timestamp) {
+      let command = TimelineNetworkEmulator.eventToCommand(nextEvent);
 
       console.log("executed command: ", command, " at ", currentTime);
       execSync(command);
-      this.currentEventIdx++;
+      this.currentEventIdx = this.nextEventIdx;
+      this.nextEventIdx++;
     }
   }
 
@@ -139,5 +145,32 @@ export class TimelineNetworkEmulator {
 
   getStatus() {
     return this.status;
+  }
+
+  getCurrentEvent(): DnctlEvent {
+    const currentTime = Date.now() - this.startTime;
+
+    if (this.currentEventIdx === -1) {
+      return {
+        timestamp: currentTime,
+        targetPipe: 0,
+        delay: 0,
+        bandWidth: 0,
+        packetLoss: 0,
+      };
+    }
+    const event = this.timeline[this.currentEventIdx];
+
+    if (isDnctlEvent(event)) {
+      return Object.assign(event, { timestamp: currentTime });
+    } else {
+      return {
+        timestamp: currentTime,
+        targetPipe: 0,
+        delay: 0,
+        bandWidth: 0,
+        packetLoss: 0,
+      };
+    }
   }
 }
