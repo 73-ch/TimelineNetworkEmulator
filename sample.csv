@@ -1,0 +1,6 @@
+timestamp,finish,targetPipe,bandWidth,delay,packetLoss
+0,0,1,1000Kbit/s,100ms,0.1
+1000,0,1,1000Kbit/s,200ms,0.2
+2000,0,1,800Kbit/s,100ms,0.05
+3000,0,1,1000Kbit/s,200ms,0.1
+4000,1,,,,
