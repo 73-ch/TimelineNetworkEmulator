@@ -1,0 +1,16 @@
+{
+  "name": "timeline-netem",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "start": "tsc && node dist/index.js"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "prettier": "^3.2.4",
+    "typescript": "^5.3.3"
+  }
+}
