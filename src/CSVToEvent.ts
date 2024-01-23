@@ -9,15 +9,21 @@ export function CSVToEvent(filePath: string) {
 
   const records = parse(file);
 
-  records.shift();
+  const header = records.shift();
+  const bandWidthIdx = header.indexOf("bandWidth");
+  const delayIdx = header.indexOf("delay");
+  const packetLossIdx = header.indexOf("packetLoss");
+  const targetPipeIdx = header.indexOf("targetPipe");
+  const finishIdx = header.indexOf("finish");
+  const timestampIdx = header.indexOf("timestamp");
 
   for (const record of records) {
-    const timestamp = Number(record[0]);
-    const finish = !!Number(record[1]);
-    const targetPipe = Number(record[2]);
-    const delay = record[3];
-    const bandWidth = record[4];
-    const packetLoss = Number(record[5]);
+    const timestamp = Number(record[timestampIdx]);
+    const finish = !!Number(record[finishIdx]);
+    const targetPipe = Number(record[targetPipeIdx]);
+    const bandWidth = Number(record[bandWidthIdx]);
+    const delay = Number(record[delayIdx]);
+    const packetLoss = Number(record[packetLossIdx]);
 
     if (finish) {
       events.push({ timestamp, finish });

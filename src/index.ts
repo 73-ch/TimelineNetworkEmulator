@@ -1,33 +1,34 @@
 import { TimelineNetworkEmulator } from "./TimelineNetworkEmulator";
+import { ValueRecorder } from "./ValueRecorder";
 
 const main = () => {
   const networkEmulator = new TimelineNetworkEmulator([
     {
       timestamp: 0,
       targetPipe: 1,
-      delay: "100ms",
-      bandWidth: "1000Kbit/s",
-      packetLoss: 0.1,
+      delay: 100,
+      bandWidth: 1000000,
+      packetLoss: 0.02,
     },
     {
       timestamp: 10000,
       targetPipe: 1,
-      delay: "1200ms",
-      bandWidth: "1000Kbit/s",
-      packetLoss: 0.1,
+      delay: 1200,
+      bandWidth: 1000000,
+      packetLoss: 0.03,
     },
     {
       timestamp: 20000,
       targetPipe: 1,
-      delay: "100ms",
-      bandWidth: "100Kbit/s",
-      packetLoss: 0.15,
+      delay: 100,
+      bandWidth: 100000,
+      packetLoss: 0.02,
     },
     {
       timestamp: 30000,
       targetPipe: 1,
-      delay: "100ms",
-      bandWidth: "2000Kbit/s",
+      delay: 100,
+      bandWidth: 2000000,
       packetLoss: 0.1,
     },
     { timestamp: 40000, finish: true },

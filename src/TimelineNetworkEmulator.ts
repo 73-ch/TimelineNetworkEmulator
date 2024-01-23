@@ -8,8 +8,8 @@ export interface TimelineEvent {
 
 export interface DnctlEvent extends TimelineEvent {
   targetPipe: number;
-  delay?: string;
-  bandWidth?: string;
+  delay?: number;
+  bandWidth?: number;
   packetLoss?: number;
 }
 
@@ -95,6 +95,11 @@ export class TimelineNetworkEmulator {
   }
 
   update() {
+    if (this.status !== "started") {
+      console.warn("timeline is not started, but update is called");
+      return;
+    }
+
     const currentTime = Date.now() - this.startTime;
     const currentEvent = this.timeline[this.currentEventIdx];
 
@@ -110,7 +115,6 @@ export class TimelineNetworkEmulator {
     // occur event
     if (isDnctlEvent(currentEvent) && currentTime > currentEvent.timestamp) {
       let command = TimelineNetworkEmulator.eventToCommand(currentEvent);
-      if (currentEvent.packetLoss) command += ` plr ${currentEvent.packetLoss}`;
 
       console.log("executed command: ", command, " at ", currentTime);
       execSync(command);
@@ -126,8 +130,8 @@ export class TimelineNetworkEmulator {
 
     let command = `sudo dnctl ${isCheck ? "-n" : ""} pipe ${event.targetPipe} config`;
 
-    if (event.delay) command += ` delay ${event.delay}`;
-    if (event.bandWidth) command += ` bw ${event.bandWidth}`;
+    if (event.delay) command += ` delay ${event.delay}ms`;
+    if (event.bandWidth) command += ` bw ${event.bandWidth / 1000}Kbit/s`;
     if (event.packetLoss) command += ` plr ${event.packetLoss}`;
 
     return command;
