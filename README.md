@@ -9,3 +9,8 @@ It uses pfctl and dnctl to configure packet loss, bandwidth, and delay along a t
 
 THIS IS A WORK IN PROGRESS. USE AT YOUR OWN RISK.
 
+## `pfctl` setting sample
+```
+dummynet in quick all pipe 1
+dummynet in quick all pipe 1
+```
