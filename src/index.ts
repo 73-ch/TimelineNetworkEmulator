@@ -1,7 +1,7 @@
 import { TimelineNetworkEmulator } from "./TimelineNetworkEmulator";
 
 const main = () => {
-  const networkEmulator = new TimelineNetworkEmulator(1, [
+  const networkEmulator = new TimelineNetworkEmulator([
     {
       timestamp: 0,
       targetPipe: 1,

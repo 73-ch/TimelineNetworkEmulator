@@ -31,7 +31,7 @@ export class TimelineNetworkEmulator {
   private currentEventIdx: number = 0;
   private status: "initialized" | "started" | "stopped" = "initialized";
 
-  constructor(targetPipe: number, timeline: TimelineEvent[]) {
+  constructor(timeline: TimelineEvent[]) {
     this.setTimeLine(timeline);
   }
 
