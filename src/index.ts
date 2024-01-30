@@ -8,30 +8,33 @@ const main = () => {
     {
       timestamp: 0,
       targetPipe: 1,
-      delay: 100,
-      bandWidth: 1000000,
-      packetLoss: 0.02,
+      delay: 0,
+      bandWidth: 1000,
+      packetLoss: 0,
     },
     {
+      // Wi-Fi
       timestamp: 10000,
       targetPipe: 1,
-      delay: 1200,
-      bandWidth: 1000000,
-      packetLoss: 0.03,
+      delay: 1,
+      bandWidth: 250,
+      packetLoss: 0,
     },
     {
+      // LTE
       timestamp: 20000,
       targetPipe: 1,
-      delay: 100,
-      bandWidth: 100000,
-      packetLoss: 0.02,
+      delay: 50,
+      bandWidth: 50,
+      packetLoss: 0.005,
     },
     {
+      // bad Wi-Fi
       timestamp: 30000,
       targetPipe: 1,
-      delay: 100,
-      bandWidth: 2000000,
-      packetLoss: 0.1,
+      delay: 10,
+      bandWidth: 100,
+      packetLoss: 0.02,
     },
     { timestamp: 40000, finish: true },
   ]);

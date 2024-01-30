@@ -137,7 +137,7 @@ export class TimelineNetworkEmulator {
     let command = `sudo dnctl ${isCheck ? "-n" : ""} pipe ${event.targetPipe} config`;
 
     if (event.delay) command += ` delay ${event.delay}ms`;
-    if (event.bandWidth) command += ` bw ${event.bandWidth / 1000}Kbit/s`;
+    if (event.bandWidth) command += ` bw ${event.bandWidth}Mbit/s`;
     if (event.packetLoss) command += ` plr ${event.packetLoss}`;
 
     return command;
